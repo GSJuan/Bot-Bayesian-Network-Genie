@@ -5,40 +5,40 @@
 import pysmile
 import pysmile_license
 
-def setEvidence():
+def setfixedValues():
   print("Enter values for:")
-  evidence = []
+  fixedValues = []
   st = input("st: Atacar || Recoger_Armas || Rcoger_Energia || Explorar || Huir || Detectar_Peligro: ")
-  evidence.append(st)
+  fixedValues.append(st)
   health = input("Health: Alto || Bajo: ")
-  evidence.append(health)
+  fixedValues.append(health)
   weapon = input("Weapon: Armado || Desarmado: ")
-  evidence.append(weapon)
+  fixedValues.append(weapon)
   opponentWeapon = input("Opponent weapon: Armados || Desarmados: ")
-  evidence.append(opponentWeapon)
+  fixedValues.append(opponentWeapon)
   heardNoise = input("Heard Noise: Si || No: ")
-  evidence.append(heardNoise)
+  fixedValues.append(heardNoise)
   numberOfEnemies = input("Number of enemies: Si || No: ")
-  evidence.append(numberOfEnemies)
+  fixedValues.append(numberOfEnemies)
   proximateWeapon = input("Proximate weapon: Si || No: ")
-  evidence.append(proximateWeapon)
+  fixedValues.append(proximateWeapon)
   proximateHealthpack = input("Proximate healthpack: Si || No: ")
-  evidence.append(proximateHealthpack)
-  return evidence
+  fixedValues.append(proximateHealthpack)
+  return fixedValues
 
 def main():
   network = pysmile.Network()
   network.read_file("Red-BotV2.xdsl")
-  evidence = setEvidence()
-  print(evidence)
-  implicatedVariables = ["St", "H", "W", "OW", "HN", "NE", "PW", "PH"]
+  fixedValues = setfixedValues()
+  print(fixedValues)
+  usedVariables = ["St", "H", "W", "OW", "HN", "NE", "PW", "PH"]
   error_code = False
 
-  for i in range(len(implicatedVariables)):
+  for i in range(len(usedVariables)):
     try:
-      network.set_evidence(implicatedVariables[i], evidence[i])
+      network.set_evidence(usedVariables[i], fixedValues[i])
     except:
-      print(f"The value \"{evidence[i]}\" is not valid for {implicatedVariables[i]}")
+      print(f"The value \"{fixedValues[i]}\" is not valid for {usedVariables[i]}")
       error_code = True
 
   if (error_code == True):
@@ -46,12 +46,12 @@ def main():
 
   network.update_beliefs()
 
-  beliefs = network.get_node_value("St1")
+  results = network.get_node_value("St1")
 
   print("\nResults:")
 
-  for i in range(0, len(beliefs)):
-    print(network.get_outcome_id('St1', i) + " = " + str(round(float(beliefs[i] * 100))) + " %")
+  for i in range(0, len(results)):
+    print(network.get_outcome_id('St1', i) + " = " + str(round(float(results[i] * 100))) + " %")
   return 0
 
 if __name__ == "__main__":

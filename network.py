@@ -23,12 +23,14 @@ def setEvidence():
   proximateWeapon = input("Proximate weapon: Si || No: ")
   evidence.append(proximateWeapon)
   proximateHealthpack = input("Proximate healthpack: Si || No: ")
+  evidence.append(proximateHealthpack)
   return evidence
 
 def main():
   network = pysmile.Network()
   network.read_file("Red-BotV2.xdsl")
-  evidence = ["Explorar", "Alto", "Armado", "Desarmados", "Si", "No", "Si", "Si"]
+  evidence = setEvidence()
+  print(evidence)
   implicatedVariables = ["St", "H", "W", "OW", "HN", "NE", "PW", "PH"]
   error_code = False
 
